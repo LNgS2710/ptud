@@ -1,7 +1,6 @@
 package custom_components.menu;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.github.weisj.jsvg.geometry.size.Length;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
@@ -44,7 +43,7 @@ public class Menu extends JComponent{
     }
     
     private Icon getIcon(int index){
-        URL url = getClass().getResource("/svg/" + index + ".svg");
+        URL url = getClass().getResource("/icon/" + index + ".svg");
         if(url != null) return new FlatSVGIcon(url);
         else return null;
     }
