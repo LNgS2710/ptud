@@ -91,6 +91,9 @@ public class DangNhapJPanel extends JPanel {
         pwMatKhau.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, bundle.getString("pwMatKhau"));
         btnDangNhap.setText(bundle.getString("btnDangNhap"));
         lblNgonNgu.setText(bundle.getString("lblNgonNgu"));
+        cbNgonNgu.removeAllItems();
+        cbNgonNgu.addItem(bundle.getString("cb1"));
+        cbNgonNgu.addItem(bundle.getString("cb2"));
         revalidate();
         repaint();
     }
