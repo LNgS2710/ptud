@@ -1,29 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entity;
 
+import java.sql.Time;
 import java.util.Objects;
-import javax.swing.JComboBox;
 
-/**
- *
- * @author Admin
- */
 public class Ban {
 
-    private String ma;
+    private String maBan;
+    private int soThuTu;
     private String viTri;
     private int soCho;
     private boolean trangThai;
+    private Time thoiGianSuDung;
 
-    public String getMa() {
-        return ma;
+    public Ban() {
     }
 
-    public void setMa(String ma) {
-        this.ma = ma;
+    public Ban(String maBan, int soThuTu, String viTri, int soCho, boolean trangThai, Time thoiGianSuDung) {
+        this.maBan = maBan;
+        this.soThuTu = soThuTu;
+        this.viTri = viTri;
+        this.soCho = soCho;
+        this.trangThai = trangThai;
+        this.thoiGianSuDung = thoiGianSuDung;
+    }
+
+    public String getMaBan() {
+        return maBan;
+    }
+
+    public void setMaBan(String maBan) {
+        this.maBan = maBan;
+    }
+
+    public int getSoThuTu() {
+        return soThuTu;
+    }
+
+    public void setSoThuTu(int soThuTu) {
+        this.soThuTu = soThuTu;
     }
 
     public String getViTri() {
@@ -33,8 +47,6 @@ public class Ban {
     public void setViTri(String viTri) {
         this.viTri = viTri;
     }
-
-    
 
     public int getSoCho() {
         return soCho;
@@ -52,36 +64,36 @@ public class Ban {
         this.trangThai = trangThai;
     }
 
-    public Ban() {
+    public Time getThoiGianSuDung() {
+        return thoiGianSuDung;
     }
 
-    public Ban(String ma, String viTri, int soCho, boolean trangThai) {
-        this.ma = ma;
-        this.viTri = viTri;
-        this.soCho = soCho;
-        this.trangThai = trangThai;
+    public void setThoiGianSuDung(Time thoiGianSuDung) {
+        this.thoiGianSuDung = thoiGianSuDung;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 79 * hash + Objects.hashCode(this.ma);
-        return hash;
+        return Objects.hash(maBan);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Ban other = (Ban) obj;
-        return Objects.equals(this.ma, other.ma);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Ban other = (Ban) obj;
+        return Objects.equals(maBan, other.maBan);
     }
 
+    @Override
+    public String toString() {
+        return "Ban{" +
+                "maBan='" + maBan + '\'' +
+                ", soThuTu=" + soThuTu +
+                ", viTri='" + viTri + '\'' +
+                ", soCho=" + soCho +
+                ", trangThai=" + trangThai +
+                ", thoiGianSuDung=" + thoiGianSuDung +
+                '}';
+    }
 }

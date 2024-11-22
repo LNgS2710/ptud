@@ -1,74 +1,93 @@
 package entity;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class NhanVien {
-    private String ma;          // Mã nhân viên (Employee ID)
-    private String ten;         // Tên nhân viên (Employee Name)
-    private String email;       // Email
-    private String soDienThoai; // Số điện thoại (Phone Number)
-    private boolean trangThai;  // Trạng thái (Active/Inactive)
-
-    // Constructor
+    private String maNV;
+    private String tenNV;
+    private boolean gioiTinh;
+    private Date ngaySinh;
+    private String sdt;
+    private String cmnd;
+    private String chucVu;
 
     public NhanVien() {
     }
     
+    public NhanVien(String maNV){
+        this.maNV = maNV;
+    }
     
-    public NhanVien(String ma, String ten, String email, String soDienThoai, boolean trangThai) {
-        this.ma = ma;
-        this.ten = ten;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.trangThai = trangThai;
+    public NhanVien(String maNV, String tenNV, boolean gioiTinh, Date ngaySinh, String sdt, String cmnd, String chucVu) {
+        this.maNV = maNV;
+        this.tenNV = tenNV;
+        this.gioiTinh = gioiTinh;
+        this.ngaySinh = ngaySinh;
+        this.sdt = sdt;
+        this.cmnd = cmnd;
+        this.chucVu = chucVu;
     }
 
-    // Getters and Setters
-    public String getMa() {
-        return ma;
+    public String getMaNV() {
+        return maNV;
     }
 
-    public void setMa(String ma) {
-        this.ma = ma;
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
-    public String getTen() {
-        return ten;
+    public String getTenNV() {
+        return tenNV;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
     }
 
-    public String getEmail() {
-        return email;
+    public boolean isGioiTinh() {
+        return gioiTinh;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setGioiTinh(boolean gioiTinh) {
+        this.gioiTinh = gioiTinh;
     }
 
-    public String getSoDienThoai() {
-        return soDienThoai;
+    public Date getNgaySinh() {
+        return ngaySinh;
     }
 
-    public void setSoDienThoai(String soDienThoai) {
-        this.soDienThoai = soDienThoai;
+    public void setNgaySinh(Date ngaySinh) {
+        this.ngaySinh = ngaySinh;
     }
 
-    public boolean isTrangThai() {
-        return trangThai;
+    public String getSdt() {
+        return sdt;
     }
 
-    public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public String getCmnd() {
+        return cmnd;
+    }
+
+    public void setCmnd(String cmnd) {
+        this.cmnd = cmnd;
+    }
+
+    public String getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(String chucVu) {
+        this.chucVu = chucVu;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.ma);
-        return hash;
+        return Objects.hash(maNV);
     }
 
     @Override
@@ -76,15 +95,24 @@ public class NhanVien {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final NhanVien other = (NhanVien) obj;
-        return Objects.equals(this.ma, other.ma);
+        NhanVien other = (NhanVien) obj;
+        return Objects.equals(maNV, other.maNV);
     }
-    
-    
+
+    // toString Method
+    @Override
+    public String toString() {
+        return "NhanVien{" +
+               "maNV='" + maNV + '\'' +
+               ", tenNV='" + tenNV + '\'' +
+               ", gioiTinh=" + (gioiTinh ? "Nam" : "Nữ") +
+               ", ngaySinh=" + ngaySinh +
+               ", sdt='" + sdt + '\'' +
+               ", cmnd='" + cmnd + '\'' +
+               ", chucVu='" + chucVu + '\'' +
+               '}';
+    }
 }
