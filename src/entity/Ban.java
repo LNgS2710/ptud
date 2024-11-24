@@ -10,18 +10,16 @@ public class Ban {
     private String viTri;
     private int soCho;
     private boolean trangThai;
-    private Time thoiGianSuDung;
 
     public Ban() {
     }
 
-    public Ban(String maBan, int soThuTu, String viTri, int soCho, boolean trangThai, Time thoiGianSuDung) {
+    public Ban(String maBan, int soThuTu, String viTri, int soCho, boolean trangThai) {
         this.maBan = maBan;
         this.soThuTu = soThuTu;
         this.viTri = viTri;
         this.soCho = soCho;
         this.trangThai = trangThai;
-        this.thoiGianSuDung = thoiGianSuDung;
     }
 
     public String getMaBan() {
@@ -64,13 +62,6 @@ public class Ban {
         this.trangThai = trangThai;
     }
 
-    public Time getThoiGianSuDung() {
-        return thoiGianSuDung;
-    }
-
-    public void setThoiGianSuDung(Time thoiGianSuDung) {
-        this.thoiGianSuDung = thoiGianSuDung;
-    }
 
     @Override
     public int hashCode() {
@@ -93,7 +84,6 @@ public class Ban {
                 ", viTri='" + viTri + '\'' +
                 ", soCho=" + soCho +
                 ", trangThai=" + trangThai +
-                ", thoiGianSuDung=" + thoiGianSuDung +
                 '}';
     }
 }

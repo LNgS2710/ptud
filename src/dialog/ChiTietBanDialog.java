@@ -97,7 +97,7 @@ public class ChiTietBanDialog extends JDialog {
     }
 
     private void populateFields(Ban ban) {
-        txtMa.setText(ban.getMa());
+        txtMa.setText(ban.getMaBan());
         cbViTri.setSelectedItem(ban.getViTri());
         spinnerSoCho.setValue(ban.getSoCho());
         btnTrangThai.setSelected(ban.isTrangThai());
