@@ -9,8 +9,8 @@ import java.awt.geom.Path2D;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class MenuItem extends JButton{
-    
+public class MenuItem extends JButton {
+
     public int getIndex() {
         return index;
     }
@@ -42,7 +42,7 @@ public class MenuItem extends JButton{
     public void setLength(int length) {
         this.length = length;
     }
-    
+
     public float getAnimate() {
         return animate;
     }
@@ -50,57 +50,55 @@ public class MenuItem extends JButton{
     public void setAnimate(float animate) {
         this.animate = animate;
     }
-    
+
     private int index;
     private boolean hasSubmenu;
     private int subMenuIndex;
     private int length;
     private float animate;
 
-    
-    
-    public MenuItem(String name, int index, boolean hasSubmenu){
+    public MenuItem(String name, int index, boolean hasSubmenu) {
         super(name);
         this.index = index;
         this.hasSubmenu = hasSubmenu;
         setContentAreaFilled(false);
         setHorizontalAlignment(SwingConstants.LEFT);
-        setFont(new Font("Segoe UI Black", Font.BOLD,  12));
+        setFont(new Font("Segoe UI Black", Font.BOLD, 12));
         setBorder(new EmptyBorder(9, 10, 9, 10));
-        setForeground(new Color(255, 255, 255));
+        setForeground(new Color(0xFBF8EF));
         setIconTextGap(10);
     }
-    
-    public void initSubMenu(int subMenuIndex, int length){
+
+    public void initSubMenu(int subMenuIndex, int length) {
         this.subMenuIndex = subMenuIndex;
         this.length = length;
         setBorder(new EmptyBorder(9, 33, 9, 10));
-        setBackground(new Color(245, 245, 245));
-        setForeground(new Color(51, 51, 51));
+        setBackground(new Color(0x78B3CE));
+        setForeground(new Color(0xF96E2A));
         setOpaque(true);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); 
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        if(length != 0){
-            g2.setColor(new Color(200, 200, 200));
-            if(subMenuIndex == 1){
+        if (length != 0) {
+            g2.setColor(new Color(0x78B3CE));
+            if (subMenuIndex == 1) {
                 g2.drawLine(18, 0, 18, getHeight());
                 g2.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
-            } else if (subMenuIndex == length - 1){
+            } else if (subMenuIndex == length - 1) {
                 g2.drawLine(18, 0, 18, getHeight() / 2);
                 g2.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
             } else {
                 g2.drawLine(18, 0, 18, getHeight());
                 g2.drawLine(18, getHeight() / 2, 26, getHeight() / 2);
             }
-        } else if(hasSubmenu){
-            g2.setColor(new Color(255, 255, 255));
-            int arrowWidth = 8;
-            int arrowHeight = 4;
+        } else if (hasSubmenu) {
+            g2.setColor(new Color(0xF96E2A));
+            int arrowWidth = 12;
+            int arrowHeight = 6;
             Path2D p = new Path2D.Double();
             p.moveTo(0, arrowHeight * animate);
             p.lineTo(arrowWidth / 2, (1f - animate) * arrowHeight);
@@ -111,6 +109,5 @@ public class MenuItem extends JButton{
         }
         g2.dispose();
     }
-    
-    
+
 }

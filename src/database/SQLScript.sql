@@ -112,6 +112,7 @@ CREATE TABLE `nhanvien` (
   `sdt` varchar(10) NOT NULL,
   `cmnd` varchar(12) NOT NULL,
   `chucVu` varchar(15) NOT NULL,
+  `matKhau` varchar(255) NOT NULL,
   PRIMARY KEY (`maNV`),
   CONSTRAINT `nhanvien_chk_1` CHECK ((`chucVu` in (_utf8mb4'Nhân viên',_utf8mb4'Quản lý')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -154,30 +155,6 @@ CREATE TABLE `phieudatban` (
 LOCK TABLES `phieudatban` WRITE;
 /*!40000 ALTER TABLE `phieudatban` DISABLE KEYS */;
 /*!40000 ALTER TABLE `phieudatban` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `taikhoan`
---
-
-DROP TABLE IF EXISTS `taikhoan`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `taikhoan` (
-  `maNV` varchar(10) NOT NULL,
-  `matKhau` varchar(255) NOT NULL,
-  PRIMARY KEY (`maNV`),
-  CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`maNV`) REFERENCES `nhanvien` (`maNV`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `taikhoan`
---
-
-LOCK TABLES `taikhoan` WRITE;
-/*!40000 ALTER TABLE `taikhoan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `taikhoan` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -235,6 +212,30 @@ BEGIN
         cmnd = p_cmnd,
         chucVu = p_chucVu
     WHERE maNV = p_maNV;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `suaTrangThaiBan` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `suaTrangThaiBan`(
+    IN p_maBan VARCHAR(5),
+    IN p_trangThai BOOLEAN
+)
+BEGIN
+    UPDATE ban
+    SET trangThai = p_trangThai
+    WHERE maBan = p_maBan;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -329,4 +330,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 14:31:47
+-- Dump completed on 2024-11-25 20:31:32
