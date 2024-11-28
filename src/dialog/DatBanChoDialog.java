@@ -30,6 +30,7 @@ import entity.KhachHang;
 import entity.PhieuDatBan;
 import entity.Ban;
 import frame.MainFrame;
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import static org.jdesktop.swingx.table.TableUtilities.isUpdate;
@@ -61,8 +62,10 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 	private DefaultComboBoxModel<String> gioModel;
 	@SuppressWarnings("rawtypes")
 	private DefaultComboBoxModel phutModel;
-//	private DialogPhieuDatBanCho dialogPhieuDatBanCho;
+	private PhieuDatBanChoDialog phieuDatBanChoDialog;
 	private JCheckBox cbInPhieuDat;
+        private JLabel lblViTriBan;
+
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DatBanChoDialog(Ban ban) {
@@ -79,7 +82,7 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(0, 139, 139));
 		panel.setBounds(0, 0, 486, 59);
-		setSize(500, 425);
+		setSize(500, 435);
 		getContentPane().add(panel);
 		setLocationRelativeTo(null);
 		panel.setLayout(null);
@@ -93,108 +96,119 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 
 		JLabel lblNewLabel_1 = new JLabel("Ngày nhận bàn");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(33, 217, 157, 35);
+		lblNewLabel_1.setBounds(33, 237, 157, 35);
 		getContentPane().add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Giờ nhận bàn");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1_1.setBounds(33, 267, 157, 35);
+		lblNewLabel_1_1.setBounds(33, 287, 157, 35);
 		getContentPane().add(lblNewLabel_1_1);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Giờ");
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1_1_1.setBounds(264, 267, 57, 35);
+		lblNewLabel_1_1_1.setBounds(264, 287, 57, 35);
 		getContentPane().add(lblNewLabel_1_1_1);
 
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Phút");
 		lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1_1_1_1.setBounds(383, 267, 55, 35);
+		lblNewLabel_1_1_1_1.setBounds(383, 287, 55, 35);
 		getContentPane().add(lblNewLabel_1_1_1_1);
 
 		cbGio = new JComboBox<String>();
 		cbGio.setFont(new Font("Tahoma", Font.BOLD, 16));
 		cbGio.setModel(gioModel = new DefaultComboBoxModel<String>(new String[] { "1", "2", "3", "4", "5", "6", "7",
 				"8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" }));
-		cbGio.setBounds(200, 267, 65, 35);
+		cbGio.setBounds(200, 287, 65, 35);
 		getContentPane().add(cbGio);
 
 		cbPhut = new JComboBox<String>();
 		cbPhut.setFont(new Font("Tahoma", Font.BOLD, 16));
 		cbPhut.setModel(phutModel = new DefaultComboBoxModel(
 				new String[] { "0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55" }));
-		cbPhut.setBounds(319, 267, 65, 35);
+		cbPhut.setBounds(319, 287, 65, 35);
 		getContentPane().add(cbPhut);
 
 		btnDatBan = new JButton("Đặt bàn");
 		btnDatBan.setBackground(new Color(65, 105, 225));
 		btnDatBan.setForeground(new Color(255, 255, 255));
 		btnDatBan.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnDatBan.setBounds(314, 326, 135, 35);
+		btnDatBan.setBounds(314, 346, 135, 35);
 		getContentPane().add(btnDatBan);
 
 		btnHuy = new JButton("Hủy");
 		btnHuy.setForeground(Color.WHITE);
 		btnHuy.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnHuy.setBackground(new Color(128, 128, 128));
-		btnHuy.setBounds(33, 326, 78, 35);
+		btnHuy.setBounds(33, 346, 78, 35);
 		getContentPane().add(btnHuy);
 
 		cbInPhieuDat = new JCheckBox("In phiếu đặt");
 		cbInPhieuDat.setSelected(true);
 		cbInPhieuDat.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cbInPhieuDat.setBounds(200, 331, 106, 21);
+		cbInPhieuDat.setBounds(200, 351, 106, 21);
 		getContentPane().add(cbInPhieuDat);
 
 		tfSDTKhach = new JTextField();
 		tfSDTKhach.setColumns(10);
-		tfSDTKhach.setBounds(200, 128, 150, 35);
+		tfSDTKhach.setBounds(200, 148, 150, 35);
 		getContentPane().add(tfSDTKhach);
 
 		lblIconKiemTraSDT = new JLabel("");
-		lblIconKiemTraSDT.setBounds(177, 128, 22, 33);
+		lblIconKiemTraSDT.setBounds(177, 148, 22, 33);
 		getContentPane().add(lblIconKiemTraSDT);
 
-		JLabel lblStKhach = new JLabel("SĐT Khách");
-		lblStKhach.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblStKhach.setBounds(33, 128, 157, 35);
-		getContentPane().add(lblStKhach);
+		JLabel lblSdtKhach = new JLabel("SĐT Khách");
+		lblSdtKhach.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSdtKhach.setBounds(33, 148, 157, 35);
+		getContentPane().add(lblSdtKhach);
 
 		btnKiemTraSDTKKhach = new JButton("Kiểm tra");
-		btnKiemTraSDTKKhach.setBounds(358, 128, 90, 35);
+		btnKiemTraSDTKKhach.setBounds(358, 148, 90, 35);
 		getContentPane().add(btnKiemTraSDTKKhach);
 
 		lblTenKhach = new JLabel("");
 		lblTenKhach.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTenKhach.setBounds(200, 170, 220, 35);
+		lblTenKhach.setBounds(200, 190, 220, 35);
 		getContentPane().add(lblTenKhach);
 
 		JLabel lblTenKhach01 = new JLabel("Tên Khách");
 		lblTenKhach01.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTenKhach01.setBounds(33, 172, 157, 35);
+		lblTenKhach01.setBounds(33, 190, 157, 35);
 		getContentPane().add(lblTenKhach01);
 
-		JLabel lblBanSo = new JLabel("Mã bàn");
+		JLabel lblBanSo = new JLabel("Bàn số");
 		lblBanSo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblBanSo.setBounds(33, 83, 157, 35);
-		getContentPane().add(lblBanSo);
-
-		lblMaBan = new JLabel("001");
+		lblBanSo.setBounds(33, 60, 157, 35);
+                getContentPane().add(lblBanSo); 
+                
+		lblMaBan = new JLabel("1");
 		lblMaBan.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblMaBan.setBounds(200, 81, 220, 35);
-		getContentPane().add(lblMaBan);
-                lblMaBan.setText(ban.getMaBan().substring(0));
+		lblMaBan.setBounds(200, 60, 220, 35);
+                getContentPane().add(lblMaBan); 
+                lblMaBan.setText(String.valueOf(ban.getSoThuTu()));
+                
+                JLabel lblViTri = new JLabel("Vị trí");
+		lblViTri.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblViTri.setBounds(33, 103, 157, 35);
+                getContentPane().add(lblViTri);
+                
+                lblViTriBan = new JLabel("Ngoài trời");
+		lblViTriBan.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblViTriBan.setBounds(200, 103, 220, 35);
+                getContentPane().add(lblViTriBan);
+                lblViTriBan.setText(ban.getViTri().substring(0));
 
 		radioHomNay = new JRadioButton("Hôm nay");
 		radioHomNay.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		radioHomNay.setSelected(true);
-		radioHomNay.setBounds(203, 227, 103, 21);
+		radioHomNay.setBounds(203, 247, 103, 21);
 		getContentPane().add(radioHomNay);
 
 		radioNgayMai = new JRadioButton("Ngày mai");
 		radioNgayMai.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		radioNgayMai.setBounds(346, 227, 103, 21);
+		radioNgayMai.setBounds(346, 247, 103, 21);
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(radioNgayMai);
 		bg.add(radioHomNay);
@@ -243,11 +257,12 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 
 	}
 
+
 	public KhachHang kiemTraSDTKhach() {
 		String sdt = tfSDTKhach.getText().toString();
 		if (sdt.trim().length() == 0) {
 			JOptionPane.showMessageDialog(this, "Bạn chưa nhập số điện thoại Khách");
-			lblIconKiemTraSDT.setIcon(new ImageIcon(ChiTietBanDialog.class.getResource("/icon/remove.png")));
+			lblIconKiemTraSDT.setIcon(new ImageIcon(getClass().getResource("/icon/remove1.png")));
 			tfSDTKhach.selectAll();
 			tfSDTKhach.requestFocus();
 			return null;
@@ -256,21 +271,21 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 				"(^(03)[2-9]\\d{7})|(^(07)[06-9]\\d{7})|(^(08)[1-5]\\d{7})|(^(056)\\d{7})|(^(058)\\d{7})|(^(059)\\d{7})|(^(09)[0-46-9]\\d{7})")) {
 			JOptionPane.showMessageDialog(this, "Số điện thoại không đúng địng dạng");
 			tfSDTKhach.selectAll();
-			lblIconKiemTraSDT.setIcon(new ImageIcon(ChiTietBanDialog.class.getResource("/icon/remove1.png")));
+			lblIconKiemTraSDT.setIcon(new ImageIcon(getClass().getResource("/icon/remove1.png")));
 			tfSDTKhach.requestFocus();
 			return null;
 		}
 		KhachHang KhachHang = khachHangDao.layKhachHangTheoSDT(sdt);
 		if (KhachHang == null) {
+                        lblIconKiemTraSDT.setIcon(new ImageIcon(getClass().getResource("/icon/remove1.png")));
 			int xacNhan = JOptionPane.showConfirmDialog(this, "Khách hàng không có trong hệ thống, Bạn có muốn thêm khách hàng không", "Thông báo", JOptionPane.YES_NO_OPTION);
-			if (xacNhan == JOptionPane.YES_OPTION) {
-//                            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(DanhSachBanJPanel.this);
-//                            ChiTietKhachHangDialog dialog = new ChiTietKhachHangDialog(parentFrame, KhachHang, trangThai);
-//                            dialog.setVisible(true);
-                            
+			if (xacNhan == JOptionPane.YES_OPTION) {                
+                            ChiTietKhachHangDialog themKH = new ChiTietKhachHangDialog(sdt);
+                            themKH.setVisible(true);
 			}
 		}
 		lblTenKhach.setText(KhachHang.getTenkhachhang());
+                lblIconKiemTraSDT.setIcon(new ImageIcon(getClass().getResource("/icon/true.png")));
 		return KhachHang;
 	}
 
@@ -280,6 +295,7 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 		Object object = e.getSource();
 		if (object.equals(btnKiemTraSDTKKhach)) {
 			if (kiemTraSDTKhach() == null) {
+                            lblIconKiemTraSDT.setIcon(new ImageIcon(getClass().getResource("/icon/remove1.png")));
 			}
 			return;
 		}
@@ -317,11 +333,12 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 				dispose();
 				return;
 			}
-//			if (cbInPhieuDat.isSelected()) {
-//				DatBanChoDialog.khoiTao(phieuDatBan);
-//				DatBanChoDialog.xuatFile();
-//
-//			} 
+			if (cbInPhieuDat.isSelected()) {
+				this.phieuDatBanChoDialog = new PhieuDatBanChoDialog();
+                                this.phieuDatBanChoDialog.khoiTao(phieuDatBan);
+				this.phieuDatBanChoDialog.xuatFile();
+
+			} 
                         else
 				JOptionPane.showMessageDialog(this, "Đặt bàn thành công");
 

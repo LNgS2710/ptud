@@ -13,6 +13,7 @@ import net.miginfocom.swing.MigLayout;
 public class ChiTietKhachHangDialog extends JDialog {
 
     private KhachHang khachhang;
+    private KhachHangDAO khachHangDAO;
     private JPanel pnlHeader, pnlContent, pnlButton;
     private JLabel lblHeader, lblMa, lblTen, lblGioiTinh, lblSoDienThoai, lblNgaySinh, lblCMND;
     private JTextField txtMa, txtTen, txtSoDienThoai, txtCMND, txtNgaySinh;
@@ -22,21 +23,18 @@ public class ChiTietKhachHangDialog extends JDialog {
     private JButton btnLuu, btnThoat;
 
 
-    public ChiTietKhachHangDialog(JFrame parent, KhachHang khachhang, boolean isUpdate) {
-        super(parent, isUpdate ? "Sửa Khách Hàng" : "Thêm Khách Hàng", true);
-        this.khachhang = khachhang;
+    public ChiTietKhachHangDialog(String sdt) {
+        khachHangDAO = new KhachHangDAO();
         initComponents();
         initEvents();
         pack();
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(null);
+        loadData();
 
-        if (isUpdate && khachhang != null) {
-            loadData();
-        }
     }
 
     private void initComponents() {
-        setModal(false);
+        setModal(true);
         pnlHeader = new JPanel();
         pnlContent = new JPanel(new MigLayout("fillx, insets 20, wrap 2", "[100][-1, grow, fill]", "[]10[]"));
         pnlButton = new JPanel(new FlowLayout(FlowLayout.RIGHT));

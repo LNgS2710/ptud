@@ -137,7 +137,16 @@ public class DanhSachBanJPanel extends JPanel {
                 JOptionPane.showMessageDialog(DanhSachBanJPanel.this, "Không tìm thấy thông tin bàn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            
+            if(ban.getTrangThai().equals("1")){
+                JOptionPane.showMessageDialog(DanhSachBanJPanel.this, "Bàn đã được đặt. Không thể đặt bàn chờ!", "Không hợp lệ", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if(ban.getTrangThai().equals("2")){
+                JOptionPane.showMessageDialog(DanhSachBanJPanel.this, "Bàn đang sử dụng. Không thể đặt bàn chờ!", "Không hợp lệ", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
             // Pass the selected Ban object to the dialog
             DatBanChoDialog phieuDatBanCho = new DatBanChoDialog(ban);
             phieuDatBanCho.setVisible(true);
@@ -146,12 +155,13 @@ public class DanhSachBanJPanel extends JPanel {
             loadTableData();
         }
     });
-//        btnTimPhieu.addActionListener(new ActionListener() {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            
-//        }
-//       }); 
+        btnTimPhieu.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            TimKiemPhieuDatBanCho timPhieu = new TimKiemPhieuDatBanCho();
+            timPhieu.setVisible(true);
+        }
+       }); 
     }
 
     private void loadTableData() {

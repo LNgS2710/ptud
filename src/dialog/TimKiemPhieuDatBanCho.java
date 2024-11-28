@@ -6,10 +6,16 @@ package dialog;
 
 import dao.BanDAO;
 import dao.PhieuDatBanDAO;
+import dao.KhachHangDAO;
 import entity.PhieuDatBan;
+import entity.Ban;
+import entity.KhachHang;
+import entity.NhanVien;
+import frame.MainFrame;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -59,17 +65,15 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 	private PhieuDatBanDAO phieuDatBanDao;
 	private List<PhieuDatBan> dsPhieuDatBan;
 	private JButton btnXemBan;
-//	private DialogPhieuDatBanCho dialogPhieuDatBanCho;
+	private PhieuDatBanChoDialog phieuDatBanChoDialog;
 
 	public TimKiemPhieuDatBanCho() {
-
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setModal(true);
 		setSize(930, 488);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
@@ -94,7 +98,7 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		btnTim = new JButton("T\u00ECm");
 		btnTim.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnTim.setBackground(new Color(0x78B3CE));
-		btnTim.setForeground(new Color(255, 255, 255));
+		btnTim.setForeground(new Color(0, 0, 0));
 		btnTim.setBounds(545, 75, 100, 30);
 		getContentPane().add(btnTim);
 
@@ -173,12 +177,12 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		tfMaPhieuDat.setBounds(135, 75, 130, 30);
 		getContentPane().add(tfMaPhieuDat);
 
-		btnXemBan = new JButton("Xem bàn");
-		btnXemBan.setForeground(Color.WHITE);
-		btnXemBan.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnXemBan.setBackground(new Color(30, 144, 255));
-		btnXemBan.setBounds(372, 411, 125, 30);
-		getContentPane().add(btnXemBan);
+//		btnXemBan = new JButton("Xem bàn");
+//		btnXemBan.setForeground(Color.WHITE);
+//		btnXemBan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+//		btnXemBan.setBackground(new Color(30, 144, 255));
+//		btnXemBan.setBounds(372, 411, 125, 30);
+//		getContentPane().add(btnXemBan);
 
 		btnTim.addActionListener(this);
 		btnHuyBan.addActionListener(this);
@@ -188,14 +192,15 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		btnXuatPDF.addActionListener(this);
 		btnTim.addActionListener(this);
 		comboBoxTrangThai.addActionListener(this);
-		btnXemBan.addActionListener(this);
+//		btnXemBan.addActionListener(this);
 		tfMaPhieuDat.addKeyListener(this);
 		tfSDTKhach.addKeyListener(this);
 
 		banDao = new BanDAO();
 //		hoaDonDao = new HoaDonDao(MainFrame.sessionFactory);
-//		dialogPhieuDatPhongCho = new DialogPhieuDatPhongCho();
+		phieuDatBanChoDialog = new PhieuDatBanChoDialog();
 		phieuDatBanDao = new PhieuDatBanDAO();
+                khoiTao();
 
 	}
 
@@ -209,11 +214,10 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		String maPhieuDat = tfMaPhieuDat.getText().trim();
 		String sdtKhach = tfSDTKhach.getText().trim();
 		int tinhTrang = comboBoxTrangThai.getSelectedIndex();
-		dsPhieuDatBan = phieuDatBanDao.layDanhSachPhieuDatBan(maPhieuDat.length() == 0 ? "" : "PDP" + maPhieuDat,
+		dsPhieuDatBan = phieuDatBanDao.layDanhSachPhieuDatBan(maPhieuDat.length() == 0 ? "" : "PDB" + maPhieuDat,
 				sdtKhach, tinhTrang);
 		xoaBang();
 		if (dsPhieuDatBan == null || dsPhieuDatBan.size() == 0) {
-//			JOptionPane.showMessageDialog(this, "Không có phiếu đặt phòng");
 			return;
 		}
 
@@ -224,8 +228,6 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 					!p.isTrangThai()? "Hết hiệu lực" : "Còn hiệu lực" });
 		}
 
-//		{ "Mã phiếu đặt", "Mã phòng",
-//			"SĐT Khách", "Thời gian lập phiếu", "Thời gian nhận phòng", "Trạng thái" }));
 	}
 
 	public void khoiTao() {
@@ -280,78 +282,59 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 			khoiTao();
 			return;
 		}
-//		if (object == comboBoxTrangThai) {
-//			themDuLieuVaoBang();
-//			return;
-//		}
-//		if (object == btnTim) {
-//			if (!tfMaPhieuDat.getText().trim().equals("") || !tfSDTKhach.getText().trim().equals(""))
-//				comboBoxTrangThai.setSelectedIndex(0);
-//			return;
-//		}
-//		if (object == btnQuayLai) {
-//			setVisible(false);
-//			return;
-//		}
-//
-//		// below need select table
-//		int indexRow = table.getSelectedRow();
-//		if (indexRow == -1) {
-//			JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu đặt phòng");
-//			return;
-//		}
-//		PhieuDatPhong phieuDatPhong = dsPhieuDatPhong.get(indexRow);
-//		if (object == btnHuyPhong) {
-//			int xacnhan = JOptionPane.showConfirmDialog(this,
-//					"Bạn có chắc chắn HUỶ phòng chờ của :" + phieuDatPhong.getKhachHang().getHoTen(), "Thông báo",
-//					JOptionPane.YES_NO_OPTION);
-//			if (xacnhan != JOptionPane.YES_OPTION) {
-//				return;
-//			}
-//			if (!phieuDatPhongDao.huyPhieuDatPhong(phieuDatPhong.getMaPDP())) {
-//				JOptionPane.showMessageDialog(this, "Hủy phòng chờ THẤT BẠI");
-//				return;
-//			}
-//			if (phieuDatPhong.getPhong().getTrangThaiPhong().getMaTTP().equals(MainFrame.maPhongTam)) {
-//				phongDao.capNhatTrangThaiPhong(phieuDatPhong.getPhong().getMaPhong(), MainFrame.maPhongBan);
+		if (object == comboBoxTrangThai) {
+			themDuLieuVaoBang();
+			return;
+		}
+		if (object == btnTim) {
+			if (!tfMaPhieuDat.getText().trim().equals("") || !tfSDTKhach.getText().trim().equals(""))
+				comboBoxTrangThai.setSelectedIndex(0);
+			return;
+		}
+		if (object == btnQuayLai) {
+			setVisible(false);
+			return;
+		}
+
+		// below need select table
+		int indexRow = table.getSelectedRow();
+		if (indexRow == -1) {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn phiếu đặt bàn");
+			return;
+		}
+		PhieuDatBan phieuDatBan = dsPhieuDatBan.get(indexRow);
+		if (object == btnHuyBan) {
+			int xacnhan = JOptionPane.showConfirmDialog(this,
+					"Bạn có chắc chắn HUỶ bàn chờ của :" + phieuDatBan.getKhachHang().getSodienthoai(), "Thông báo",
+					JOptionPane.YES_NO_OPTION);
+			if (xacnhan != JOptionPane.YES_OPTION) {
+				return;
+			}
+			if (!phieuDatBanDao.huyPhieuDatBan(phieuDatBan.getMaPDB())) {
+				JOptionPane.showMessageDialog(this, "Hủy bàn chờ THẤT BẠI");
+				return;
+			}
+//			if (phieuDatBan.getBan().getTrangThai().equals()) {
+//				banDao.suaTrangThaiBan(phieuDatBan.getBan().getMaBan(), "0");
+//                        }
 //			} else {
-//				phongDao.capNhatTrangThaiPhong(phieuDatPhong.getPhong().getMaPhong(), MainFrame.maPhongTrong);
+//				banDao.suaTrangThaiBan(phieuDatBan.getBan().getMaBan(), MainFrame.banTrong);
 //			}
-//			JOptionPane.showMessageDialog(this,
-//					"Hủy phiếu đặt phòng " + phieuDatPhong.getMaPDP().substring(3) + " thành công ");
-//			themDuLieuVaoBang();
-//			return;
-//		}
-//		if (object == btnNhanPhong) {
-//			int xacnhan = JOptionPane.showConfirmDialog(this, "Xác nhận nhận phòng "
-//					+ phieuDatPhong.getPhong().getMaPhong() + " của: " + phieuDatPhong.getKhachHang().getHoTen(),
-//					"Thông báo", JOptionPane.YES_NO_OPTION);
-//			if (xacnhan != JOptionPane.YES_OPTION) {
-//				return;
-//			}
-//			HoaDon hoaDon = new HoaDon(MainFrame.nhanVien, MainFrame.khuyenMaiMacDinh, phieuDatPhong.getKhachHang());
-//			hoaDon.setKhachHang(phieuDatPhong.getKhachHang());
-//			hoaDon.setChiTietHoaDon(Arrays.asList(new ChiTietHoaDon(phieuDatPhong.getPhong(), hoaDon, 0)));
-//			phongDao.capNhatTrangThaiPhong(phieuDatPhong.getPhong().getMaPhong(), MainFrame.maPhongBan);
-//			phieuDatPhongDao.huyPhieuDatPhong(phieuDatPhong.getMaPDP());
-//			if (hoaDonDao.themHoaDon(hoaDon)) {
-//				System.out.println("add Bill success");
-//			} else {
-//				System.out.println("add Bill fail");
-//			}
-//			JOptionPane.showMessageDialog(this, "Nhận phòng " + phieuDatPhong.getPhong().getMaPhong() + " thành công");
-//			themDuLieuVaoBang();
-//			return;
-//		}
-//		System.out.println("o");
-//		if (object == btnXuatPDF) {
-//			System.out.println("Xuat");
-//			dialogPhieuDatPhongCho.khoiTao(phieuDatPhong);
-//			dialogPhieuDatPhongCho.xuatFile();
-//
-//			return;
-//		}
-//		if (object == btnXemPhong) {
+			JOptionPane.showMessageDialog(this, "Hủy phiếu đặt bàn " + phieuDatBan.getMaPDB().substring(3) + " thành công ");
+			banDao.suaTrangThaiBan(phieuDatBan.getBan().getMaBan(), "0");
+                        themDuLieuVaoBang();
+                        khoiTao();
+			return;
+		}
+
+		System.out.println("o");
+		if (object == btnXuatPDF) {
+			System.out.println("Xuất");
+			this.phieuDatBanChoDialog.khoiTao(phieuDatBan);
+			this.phieuDatBanChoDialog.xuatFile();
+			return;
+		}
+//		if (object == btnXemBan) {
 //			setVisible(false);
 //			MainFrame.disableAllPanel();
 //			MainFrame.chiTietPhongPanel.khoiTao(phieuDatPhong.getPhong().getMaPhong());
@@ -359,6 +342,7 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 //		}
 
 	}
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {

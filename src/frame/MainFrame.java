@@ -23,6 +23,10 @@ public class MainFrame extends JFrame {
     JPanel pnlBase, pnlMenu, pnlBody, pnlBot;
     JLabel lbltenNV;
     public static NhanVien nhanVien;
+    public static String banCho = "Đã được đặt";
+    public static String banDangSD = "Đang sử dụng";
+    public static String banTrong = "Còn trống";
+    public static String banTam = "3";
 
     public MainFrame(NhanVien nhanVien) {
         //JFrame settings

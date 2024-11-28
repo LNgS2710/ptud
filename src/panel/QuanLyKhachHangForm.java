@@ -94,7 +94,7 @@ public class QuanLyKhachHangForm extends JPanel {
 
     private void initEvents() {
         btnThem.addActionListener(e -> {
-            ChiTietKhachHangDialog dialog = new ChiTietKhachHangDialog((JFrame) SwingUtilities.getWindowAncestor(this), null, false);
+            ChiTietKhachHangDialog dialog = new ChiTietKhachHangDialog(TOOL_TIP_TEXT_KEY);
             dialog.setVisible(true);
             loadTable();
         });
