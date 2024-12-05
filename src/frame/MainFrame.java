@@ -15,6 +15,7 @@ import custom_components.menu.MenuEvent;
 import dialog.TimKiemPhieuDatBanCho;
 import entity.NhanVien;
 import panel.DanhSachBanJPanel;
+import panel.DanhSachKhuyenMai;
 
 public class MainFrame extends JFrame {
 
@@ -23,9 +24,9 @@ public class MainFrame extends JFrame {
     JPanel pnlBase, pnlMenu, pnlBody, pnlBot;
     JLabel lbltenNV;
     public static NhanVien nhanVien;
-    public static String banCho = "Đã được đặt";
-    public static String banDangSD = "Đang sử dụng";
-    public static String banTrong = "Còn trống";
+    public static String banCho = "1";
+    public static String banDangSD = "2";
+    public static String banTrong = "0";
     public static String banTam = "3";
 
     public MainFrame(NhanVien nhanVien) {
@@ -86,6 +87,7 @@ public class MainFrame extends JFrame {
                 if(index == 1 && subIndex == 1) showForm(new TimKiemPhieuDatBanCho());
                 if(index == 1 && subIndex == 2) showForm(new DanhSachBanJPanel());
                 if(index == 2 && subIndex == 2) showForm(new QuanLyThucDonForm());
+                if(index == 3 && subIndex == 1) showForm(new DanhSachKhuyenMai());
                 if(index == 4 && subIndex == 1) showForm(new QuanLyNhanVienForm());
                 if(index == 5 && subIndex == 1) showForm(new QuanLyKhachHangForm());
             }

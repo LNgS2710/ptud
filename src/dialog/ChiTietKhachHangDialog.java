@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
-
 public class ChiTietKhachHangDialog extends JDialog {
 
     private KhachHang khachhang;
@@ -21,6 +20,7 @@ public class ChiTietKhachHangDialog extends JDialog {
     private String[] cbItems = {"Nam", "Nữ"};
     private JDateChooser lich;
     private JButton btnLuu, btnThoat;
+    public static  KhachHang khachHang;
 
 
     public ChiTietKhachHangDialog(String sdt) {
@@ -172,16 +172,7 @@ public class ChiTietKhachHangDialog extends JDialog {
 
                 dao.KhachHangDAO.themkhachhang(khachhang);
                 JOptionPane.showMessageDialog(this, "Khách hàng đã được thêm!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                khachhang.setTenkhachhang(ten);
-                khachhang.setGioitinh(gioiTinh.equals("Nam"));
-                khachhang.setSodienthoai(soDienThoai);
-                khachhang.setNgaysinh(new java.sql.Date(ngaySinh.getTime()));
-                khachhang.setCmnd(cmnd);
-
-                dao.KhachHangDAO.suakhachhang(khachhang);
-                JOptionPane.showMessageDialog(this, "Khách hàng đã được sửa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            }
+            }   
             dispose();
         }
     }
@@ -204,3 +195,4 @@ public class ChiTietKhachHangDialog extends JDialog {
         }
     }
 }
+

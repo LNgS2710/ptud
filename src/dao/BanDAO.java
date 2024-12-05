@@ -70,6 +70,28 @@ public class BanDAO {
         }
         return danhSachBan;
     }
+    
+    public Ban getBanById(String maBan) {
+        Ban ban = null;
+        String sql = "{CALL getBanByID(?)}";
+        try {
+            CallableStatement cs = conn.prepareCall(sql);
+            cs.setString(1, maBan);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                ban = new Ban();
+                ban.setMaBan(rs.getString("maBan"));
+                ban.setSoThuTu(rs.getInt("soThuTu"));
+                ban.setViTri(rs.getString("viTri"));
+                ban.setSoCho(rs.getInt("soCho"));
+                ban.setTrangThai(rs.getString("trangThai"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ban;
+    }
+    
     public Ban layThongTinBanQuaMa(String maBan) {
     // JDBC connection variables
     Connection connection = null;

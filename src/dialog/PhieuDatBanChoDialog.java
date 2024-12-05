@@ -85,7 +85,7 @@ public class PhieuDatBanChoDialog extends JDialog {
             lblNewLabel_2.setBounds(149, 33, 395, 13);
             contentPanel.add(lblNewLabel_2);
 
-            JLabel lblNewLabel_3 = new JLabel("PHIẾU ĐẶT BÀN CHỜ");
+            JLabel lblNewLabel_3 = new JLabel("PHIẾU ĐẶT BÀN");
             lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
             lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD, 35));
             lblNewLabel_3.setBounds(0, 68, 591, 53);

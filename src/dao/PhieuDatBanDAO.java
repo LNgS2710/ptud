@@ -227,6 +227,49 @@ public class PhieuDatBanDAO {
             phieuDatBan.setTrangThai(resultSet.getBoolean("trangThai"));
             return phieuDatBan;
         }
+        
+//        public List<PhieuDatBan> layDanhSachPhieuDatBan(String maPhieuDat, String sdtKhach, int trangThai, int soThuTu) {
+//            List<PhieuDatBan> danhSach = new ArrayList<>();
+//            String sql = "SELECT * FROM phieudatban p " +
+//                         "JOIN khachhang k ON k.maKH = p.maKH" +
+//                    "JOIN ban b ON b.maBan = p.maBan WHERE ";
+//
+//            if (!maPhieuDat.equals("")) {
+//                sql += " p.maPDB = ? AND ";
+//            } else if (!sdtKhach.equals("")) {
+//                sql += " k.SDT = ? AND ";
+//            }
+//
+//            if (trangThai == 1) {
+//                sql += " p.trangThai = 1 ";
+//            } else if (trangThai == 2) {
+//                sql += " p.trangThai = 0 ";
+//            } else {
+//                sql += " p.trangThai IS NOT NULL ";
+//            }
+//
+//            sql += " ORDER BY p.maPDB DESC LIMIT 50";
+//            Connection connection = JDBC.getConnection();
+//
+//            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//                int paramIndex = 1;
+//                if (!maPhieuDat.equals("")) {
+//                    preparedStatement.setString(paramIndex++, maPhieuDat);
+//                } else if (!sdtKhach.equals("")) {
+//                    preparedStatement.setString(paramIndex++, sdtKhach);
+//                }
+//                preparedStatement.setInt(paramIndex, (soThuTu - 1));
+//                ResultSet resultSet = preparedStatement.executeQuery();
+//                while (resultSet.next()) {
+//                    danhSach.add(mapResultSetToPhieuDatBan(resultSet));
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            } finally {
+//                JDBC.closeConnection(connection);
+//            }
+//            return danhSach;
+//        }
 
 //        // Method to retrieve a list of PhieuDatPhong based on conditions
         public List<PhieuDatBan> layDanhSachPhieuDatBan(String maPhieuDat, String sdtKhach, int trangThai) {
@@ -271,5 +314,24 @@ public class PhieuDatBanDAO {
             return danhSach;
         }
 
+        public List<PhieuDatBan> layPhieuDatBanTheoBan(String maBan) {
+            List<PhieuDatBan> danhSachPhieu = new ArrayList<>();
+            try (Connection conn = JDBC.getConnection()) {
+                String sql = "SELECT * FROM PhieuDatBan WHERE maBan = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, maBan); // Sử dụng khóa ngoại để lọc các phiếu đặt của bàn
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    PhieuDatBan phieu = new PhieuDatBan();
+                    phieu.setMaPDB(rs.getString("maPDB")); // Ví dụ thêm nếu có
+                    phieu.setBan(new BanDAO().layThongTinBanQuaMa(rs.getString("maBan"))); 
+                    phieu.setThoiGianNhanBan(rs.getTimestamp("thoiGianNhanBan"));
+                    danhSachPhieu.add(phieu);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return danhSachPhieu;
+        }
     
 }

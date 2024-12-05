@@ -80,12 +80,12 @@ public class KhachHangDAO {
 
             if (rs.next()) {
                 khachhang = new KhachHang();
-                khachhang.setMakhachhang(rs.getString("makhachhang"));
-                khachhang.setTenkhachhang(rs.getString("tenkhachhang"));
-                khachhang.setGioitinh(rs.getBoolean("gioitinh"));
-                khachhang.setSodienthoai(rs.getString("sodienthoai"));
-                khachhang.setNgaysinh(rs.getDate("ngaysinh"));
-                khachhang.setCmnd(rs.getString("cmnd"));
+                khachhang.setMakhachhang(rs.getString("MaKH"));
+                khachhang.setTenkhachhang(rs.getString("TenKH"));
+                khachhang.setGioitinh(rs.getBoolean("GioiTinh"));
+                khachhang.setSodienthoai(rs.getString("SDT"));
+                khachhang.setNgaysinh(rs.getDate("NgaySinh"));
+                khachhang.setCmnd(rs.getString("CMND"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

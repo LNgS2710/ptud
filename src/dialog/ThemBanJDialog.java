@@ -14,10 +14,12 @@ public class ThemBanJDialog extends JDialog {
     private JComboBox<String> cboViTri;
     private JButton btnAdd, btnCancel;
     private BanDAO banDAO;
+    private Ban ban;
 
     public ThemBanJDialog(Frame owner) {
         super(owner, "Thêm Bàn", true);
         banDAO = new BanDAO();
+        ban = new Ban();
         init();
         initEvent();
     }
@@ -85,6 +87,7 @@ public class ThemBanJDialog extends JDialog {
 
         if (isSuccess) {
             JOptionPane.showMessageDialog(this, "Thêm bàn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            ban.setTrangThai("Bàn trống");
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Thêm bàn thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);

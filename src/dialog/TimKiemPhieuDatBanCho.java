@@ -59,7 +59,7 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 //	private HoaDonDao hoaDonDao;
 	private JButton btnHuyBan;
 	private JButton btnNhanBan;
-	private JTextField tfMaPhieuDat;
+	private JTextField tfMaPhieuDat, tfBanSo;
 	private JScrollPane scrollPane;
 	private JComboBox<String> comboBoxTrangThai;
 	private PhieuDatBanDAO phieuDatBanDao;
@@ -107,7 +107,7 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		getContentPane().add(scrollPane);
 
 		table = new JTable();
-		table.setModel(tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã phiếu đặt", "Mã bàn",
+		table.setModel(tableModel = new DefaultTableModel(new Object[][] {}, new String[] { "Mã phiếu đặt", "Bàn - Vị trí",
 				"SĐT Khách", "Thời gian lập phiếu", "Thời gian nhận bàn", "Trạng thái" }));
 		scrollPane.setViewportView(table);
 		btnXuatPDF = new JButton("Xuất phiếu");
@@ -170,12 +170,22 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		JLabel lblNewLabel_1_1_2 = new JLabel("Mã phiếu đặt");
 		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel_1_1_2.setBounds(10, 75, 120, 30);
-		getContentPane().add(lblNewLabel_1_1_2);
+//		getContentPane().add(lblNewLabel_1_1_2);
 
 		tfMaPhieuDat = new JTextField();
 		tfMaPhieuDat.setColumns(10);
 		tfMaPhieuDat.setBounds(135, 75, 130, 30);
-		getContentPane().add(tfMaPhieuDat);
+//		getContentPane().add(tfMaPhieuDat);
+                
+                JLabel lblNewLabel_1_1_2_2 = new JLabel("Bàn số");
+		lblNewLabel_1_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1_1_2_2.setBounds(10, 75, 120, 30);
+		getContentPane().add(lblNewLabel_1_1_2_2);
+
+		tfBanSo = new JTextField();
+		tfBanSo.setColumns(10);
+		tfBanSo.setBounds(135, 75, 130, 30);
+		getContentPane().add(tfBanSo);
 
 //		btnXemBan = new JButton("Xem bàn");
 //		btnXemBan.setForeground(Color.WHITE);
@@ -222,7 +232,7 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		}
 
 		for (PhieuDatBan p : dsPhieuDatBan) {
-			tableModel.addRow(new String[] { p.getMaPDB().substring(3), p.getBan().getMaBan(),
+			tableModel.addRow(new String[] { p.getMaPDB().substring(3), p.getBan().getSoThuTu() + "  -  " + p.getBan().getViTri(),
 					p.getKhachHang().getSodienthoai(), FormatCustom.dinhDanhThoiGian(p.getThoiGianDat()),
 					FormatCustom.dinhDanhThoiGian(p.getThoiGianNhanBan()),
 					!p.isTrangThai()? "Hết hiệu lực" : "Còn hiệu lực" });
@@ -305,7 +315,7 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 		PhieuDatBan phieuDatBan = dsPhieuDatBan.get(indexRow);
 		if (object == btnHuyBan) {
 			int xacnhan = JOptionPane.showConfirmDialog(this,
-					"Bạn có chắc chắn HUỶ bàn chờ của :" + phieuDatBan.getKhachHang().getSodienthoai(), "Thông báo",
+					"Bạn có chắc chắn HUỶ bàn chờ của :" + phieuDatBan.getKhachHang().getTenkhachhang(), "Thông báo",
 					JOptionPane.YES_NO_OPTION);
 			if (xacnhan != JOptionPane.YES_OPTION) {
 				return;
@@ -334,12 +344,6 @@ public class TimKiemPhieuDatBanCho extends JDialog implements ActionListener, Mo
 			this.phieuDatBanChoDialog.xuatFile();
 			return;
 		}
-//		if (object == btnXemBan) {
-//			setVisible(false);
-//			MainFrame.disableAllPanel();
-//			MainFrame.chiTietPhongPanel.khoiTao(phieuDatPhong.getPhong().getMaPhong());
-//			return;
-//		}
 
 	}
 

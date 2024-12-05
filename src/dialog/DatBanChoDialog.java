@@ -30,6 +30,7 @@ import entity.KhachHang;
 import entity.PhieuDatBan;
 import entity.Ban;
 import frame.MainFrame;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -279,9 +280,15 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 		if (KhachHang == null) {
                         lblIconKiemTraSDT.setIcon(new ImageIcon(getClass().getResource("/icon/remove1.png")));
 			int xacNhan = JOptionPane.showConfirmDialog(this, "Khách hàng không có trong hệ thống, Bạn có muốn thêm khách hàng không", "Thông báo", JOptionPane.YES_NO_OPTION);
-			if (xacNhan == JOptionPane.YES_OPTION) {                
-                            ChiTietKhachHangDialog themKH = new ChiTietKhachHangDialog(sdt);
-                            themKH.setVisible(true);
+			if (xacNhan == JOptionPane.YES_OPTION) {
+                            ChiTietKhachHangDialog dialogThemKhachHang = new ChiTietKhachHangDialog(sdt);
+                            dialogThemKhachHang.setVisible(true);
+                            if (ChiTietKhachHangDialog.khachHang == null) {
+                                    dialogThemKhachHang.dispose();
+                                    return null;
+                            }
+                            dialogThemKhachHang.dispose();
+                            KhachHang = ChiTietKhachHangDialog.khachHang;
 			}
 		}
 		lblTenKhach.setText(KhachHang.getTenkhachhang());
@@ -320,19 +327,44 @@ public class DatBanChoDialog extends JDialog implements ActionListener {
 			date.setHours(gio);
 			if (khachHang == null)
 				return;
+                        List<PhieuDatBan> dsPhieuDatBan = phieuDatBanDao.layPhieuDatBanTheoBan(ban.getMaBan());
+                        for (PhieuDatBan phieu : dsPhieuDatBan) {
+                            // Kiểm tra thời gian giữa các phiếu đặt
+                                long timeDiff = Math.abs(date.getTime() - phieu.getThoiGianNhanBan().getTime());
+                                if (timeDiff < (2 * 60 * 60 * 1000 + 30 * 60 * 1000)) { // 2 giờ 30 phút
+                                    JOptionPane.showMessageDialog(this, "Thời gian nhận bàn phải cách nhau ít nhất 2 giờ 30 phút với các đặt chờ hiện có.");
+                                    return;
+                                }
+                            
+                        }
 			int xacNhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn đặt bàn chờ không ", "Thông báo",
 					JOptionPane.YES_NO_OPTION);
 			if (xacNhan != JOptionPane.YES_OPTION) {
 				return;
 			}
 			PhieuDatBan phieuDatBan = new PhieuDatBan(ban, khachHang, MainFrame.nhanVien, date);
-			if (!banDao.suaTrangThaiBan(ban.getMaBan(), "1")
+                        if (!banDao.suaTrangThaiBan(ban.getMaBan(), MainFrame.banCho)
 					|| !phieuDatBanDao.themPhieuDatBan(phieuDatBan)) {
-				JOptionPane.showMessageDialog(this, "Đặt bàn KHÔNG thành công");
+				JOptionPane.showMessageDialog(this, "Đặt phòng KHÔNG thành công");
 				setVisible(false);
 				dispose();
 				return;
 			}
+                        
+                        if (!ban.getTrangThai().equals("1")) {
+                            if (!banDao.suaTrangThaiBan(ban.getMaBan(), "1")) {
+                                JOptionPane.showMessageDialog(this, "Không thể cập nhật trạng thái bàn");
+                                return;
+                            }
+                        }
+                        
+//			if (!banDao.suaTrangThaiBan(ban.getMaBan(), "1")
+//					|| !phieuDatBanDao.themPhieuDatBan(phieuDatBan)) {
+//				JOptionPane.showMessageDialog(this, "Đặt bàn KHÔNG thành công");
+//				setVisible(false);
+//				dispose();
+//				return;
+//			}
 			if (cbInPhieuDat.isSelected()) {
 				this.phieuDatBanChoDialog = new PhieuDatBanChoDialog();
                                 this.phieuDatBanChoDialog.khoiTao(phieuDatBan);

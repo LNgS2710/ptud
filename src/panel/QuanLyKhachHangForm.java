@@ -3,7 +3,9 @@ package panel;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import dao.KhachHangDAO;
+import dialog.CapNhatKhachHangDialog;
 import dialog.ChiTietKhachHangDialog;
+import dialog.TimKiemKhachHangDialog;
 import entity.KhachHang;
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class QuanLyKhachHangForm extends JPanel {
     private String[] cols = {"Mã khách hàng", "Tên khách hàng", "Giới tính", "Số điện thoại", "Ngày sinh", "Số CMND"};
     private DefaultTableModel model;
     private JTable table;
+ 
 
     public QuanLyKhachHangForm() {
         FlatLightLaf.setup();
@@ -52,13 +55,13 @@ public class QuanLyKhachHangForm extends JPanel {
         lblHeader.setForeground(Color.orange);
 
         btnThem.setBackground(Color.orange);
-        btnThem.setIcon(new FlatSVGIcon("svg/add.svg"));
+        btnThem.setIcon(new FlatSVGIcon("icon/add.svg"));
         btnSua.setBackground(Color.orange);
-        btnSua.setIcon(new FlatSVGIcon("svg/edit.svg"));
+        btnSua.setIcon(new FlatSVGIcon("icon/edit.svg"));
         btnXoa.setBackground(Color.orange);
-        btnXoa.setIcon(new FlatSVGIcon("svg/delete.svg"));
+        btnXoa.setIcon(new FlatSVGIcon("icon/delete.svg"));
         btnTimKiem.setBackground(Color.orange);
-        btnTimKiem.setIcon(new FlatSVGIcon("svg/search.svg"));
+        btnTimKiem.setIcon(new FlatSVGIcon("icon/search.svg"));
 
         model = new DefaultTableModel(cols, 0);
         table = new JTable(model);
@@ -105,7 +108,7 @@ public class QuanLyKhachHangForm extends JPanel {
                 String maKhachHang = (String) model.getValueAt(selectedRow, 0);
                 KhachHang khachhang = KhachHangDAO.getkhachhangbyma(maKhachHang);
                 if (khachhang != null) {
-                    ChiTietKhachHangDialog dialog = new ChiTietKhachHangDialog((JFrame) SwingUtilities.getWindowAncestor(this), khachhang, true);
+                    CapNhatKhachHangDialog dialog = new CapNhatKhachHangDialog(khachhang);
                     dialog.setVisible(true);
                     loadTable();
                 } else {
@@ -137,6 +140,8 @@ public class QuanLyKhachHangForm extends JPanel {
 
         btnTimKiem.addActionListener(e -> {
             // Code to search for a customer
+            TimKiemKhachHangDialog dialog = new TimKiemKhachHangDialog((JFrame) SwingUtilities.getWindowAncestor(this), model);
+            dialog.setVisible(true);
         });
     }
 }
